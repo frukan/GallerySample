@@ -44,7 +44,12 @@ public class MyGridView extends LinearLayout {
         if (rootView != null) {
 
             for (int x = 0; x < 10; x++) {
-                RowView rowView = new RowView(getContext(), new Image[2]);
+
+                Image[] images = new Image[2];
+                images[0] = gallery.getImages().get(2 * x);
+                images[1] = gallery.getImages().get(2 * x + 1);
+
+                RowView rowView = new RowView(getContext(), images);
 
                 LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
