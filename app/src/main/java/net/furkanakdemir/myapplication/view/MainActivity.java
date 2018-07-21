@@ -3,8 +3,9 @@ package net.furkanakdemir.myapplication.view;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import net.furkanakdemir.myapplication.R;
 import net.furkanakdemir.myapplication.data.GalleryMapper;
 import net.furkanakdemir.myapplication.data.GalleryRepository;
@@ -16,6 +17,9 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.gridview_main) MyGridView gridView;
+
+
     private GalleryViewModel galleryViewModel;
 
     @Override
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         Timber.uprootAll();
         Timber.plant(new Timber.DebugTree());
 
+        ButterKnife.bind(this);
+
         // TODO Inject via Dagger
         ViewModelFactory factory = new ViewModelFactory(new GalleryRepository(null, new RemoteDataSource(new GalleryMapper())));
 
@@ -33,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         galleryViewModel.getGalleryLiveData().observe(this, new Observer<Gallery>() {
             @Override
-            public void onChanged(@Nullable Gallery gallery) {
+            public void onChanged(Gallery gallery) {
                 Timber.d("[GALLERY] %s", gallery.toString());
+
+                gridView.setGallery(gallery);
             }
         });
 

@@ -10,6 +10,10 @@ public class Gallery {
         this.images = images;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
