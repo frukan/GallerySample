@@ -1,7 +1,8 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import net.furkanakdemir.myapplication.data.Repository;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 

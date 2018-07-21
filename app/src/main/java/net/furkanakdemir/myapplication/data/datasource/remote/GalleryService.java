@@ -1,7 +1,8 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.data.datasource.remote;
 
 import io.reactivex.Observable;
 import java.util.List;
+import net.furkanakdemir.myapplication.data.model.ImageRaw;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

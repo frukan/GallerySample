@@ -1,4 +1,4 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -7,6 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import net.furkanakdemir.myapplication.data.Repository;
+import net.furkanakdemir.myapplication.data.model.Gallery;
 import timber.log.Timber;
 
 public class GalleryViewModel extends ViewModel {

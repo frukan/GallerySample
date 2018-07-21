@@ -1,6 +1,8 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.data;
 
 import io.reactivex.Observable;
+import net.furkanakdemir.myapplication.data.datasource.DataSource;
+import net.furkanakdemir.myapplication.data.model.Gallery;
 
 public class GalleryRepository implements Repository {
 

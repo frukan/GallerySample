@@ -1,8 +1,12 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.data.datasource.remote;
 
 import io.reactivex.Observable;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import net.furkanakdemir.myapplication.BuildConfig;
+import net.furkanakdemir.myapplication.data.GalleryMapper;
+import net.furkanakdemir.myapplication.data.datasource.DataSource;
+import net.furkanakdemir.myapplication.data.model.Gallery;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

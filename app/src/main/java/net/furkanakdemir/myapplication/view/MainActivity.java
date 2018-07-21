@@ -1,10 +1,17 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import net.furkanakdemir.myapplication.R;
+import net.furkanakdemir.myapplication.data.GalleryMapper;
+import net.furkanakdemir.myapplication.data.GalleryRepository;
+import net.furkanakdemir.myapplication.data.datasource.remote.RemoteDataSource;
+import net.furkanakdemir.myapplication.data.model.Gallery;
+import net.furkanakdemir.myapplication.viewmodel.GalleryViewModel;
+import net.furkanakdemir.myapplication.viewmodel.ViewModelFactory;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {

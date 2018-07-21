@@ -1,4 +1,4 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.data.model;
 
 public class Image {
 

@@ -1,8 +1,11 @@
-package net.furkanakdemir.myapplication;
+package net.furkanakdemir.myapplication.data;
 
 import io.reactivex.functions.Function;
 import java.util.ArrayList;
 import java.util.List;
+import net.furkanakdemir.myapplication.data.model.Gallery;
+import net.furkanakdemir.myapplication.data.model.Image;
+import net.furkanakdemir.myapplication.data.model.ImageRaw;
 
 public class GalleryMapper implements Function<List<ImageRaw>, Gallery> {
 
