@@ -92,14 +92,18 @@ public class MyGridView extends LinearLayout {
 
                 int remainingRowCount = gallerySize % COLUMN_COUNT;
 
-                RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
-                    .subList(gallery.size() - remainingRowCount, gallery.size()));
+                if (remainingRowCount != 0) {
+                    RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
+                        .subList(gallery.size() - remainingRowCount, gallery.size()));
 
-                LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                    LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-                rowView.setLayoutParams(lpView);
+                    rowView.setLayoutParams(lpView);
 
-                rootView.addView(rowView);
+                    rootView.addView(rowView);
+                }
+
+
             }
 
 
