@@ -20,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RemoteDataSource implements DataSource<Gallery> {
 
     private static final String                 BASE_URL = "https://api.unsplash.com/";
-    private static final int                    COUNT    = 29;
     private static       HttpLoggingInterceptor logging  = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     private GalleryMapper galleryMapper;
 

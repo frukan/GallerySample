@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog      columnDialog;
     private AlertDialog      sourceDialog;
 
+    CountingIdlingResource espressoTestIdlingResource = new CountingIdlingResource("Network_Call");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Gallery gallery) {
                 Timber.d("[GALLERY] %s", gallery.toString());
+                espressoTestIdlingResource.decrement();
 
                 gridView.removeAllViews();
 
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(rootView, R.string.error, Snackbar.LENGTH_SHORT).show();
             }
         });
-
+        espressoTestIdlingResource.increment();
         galleryViewModel.refreshList();
 
         setupColumnDialog();
@@ -114,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSourceDialog() {
         NumberPicker picker = new NumberPicker(this);
+        picker.setId(R.id.numberpicker_source);
         picker.setMinValue(1);
         picker.setMaxValue(30);
 
@@ -125,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                 int sourceCount = picker.getValue();
 
+                espressoTestIdlingResource.increment();
                 galleryViewModel.refreshList(sourceCount);
             })
             .setNegativeButton(android.R.string.cancel, null)
@@ -133,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupColumnDialog() {
         NumberPicker picker = new NumberPicker(this);
+        picker.setId(R.id.numberpicker_column);
         picker.setMinValue(1);
         picker.setMaxValue(6);
 
@@ -173,5 +180,9 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public CountingIdlingResource getEspressoIdlingResourceForMainActivity() {
+        return espressoTestIdlingResource;
     }
 }
