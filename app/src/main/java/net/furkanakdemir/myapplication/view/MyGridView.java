@@ -74,15 +74,26 @@ public class MyGridView extends LinearLayout {
                 rowView.setLayoutParams(lpView);
 
                 rootView.addView(rowView);
-            }
+            } else {
+                for (int x = 0; x < rowSize; x++) {
 
-            for (int x = 0; x < rowSize; x++) {
+                    int startIndex = COLUMN_COUNT * x;
+                    int endIndex = COLUMN_COUNT * x + COLUMN_COUNT;
 
-                int startIndex = COLUMN_COUNT * x;
-                int endIndex = COLUMN_COUNT * x + COLUMN_COUNT;
+                    RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
+                        .subList(startIndex, endIndex));
+
+                    LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+                    rowView.setLayoutParams(lpView);
+
+                    rootView.addView(rowView);
+                }
+
+                int remainingRowCount = gallerySize % COLUMN_COUNT;
 
                 RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
-                    .subList(startIndex, endIndex));
+                    .subList(gallery.size() - remainingRowCount, gallery.size()));
 
                 LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -91,16 +102,7 @@ public class MyGridView extends LinearLayout {
                 rootView.addView(rowView);
             }
 
-            int remainingRowCount = gallerySize % COLUMN_COUNT;
 
-            RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
-                .subList(gallery.size() - remainingRowCount, gallery.size()));
-
-            LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-            rowView.setLayoutParams(lpView);
-
-            rootView.addView(rowView);
         }
     }
 }

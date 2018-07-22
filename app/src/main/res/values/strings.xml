@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Gallery</string>
     <string name="title_dialog_column">Set column count</string>
+    <string name="title_dialog_source">Set source count</string>
 </resources>

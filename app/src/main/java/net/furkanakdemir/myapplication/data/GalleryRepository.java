@@ -16,8 +16,8 @@ public class GalleryRepository implements Repository {
     }
 
     @Override
-    public Observable<Gallery> getImages() {
+    public Observable<Gallery> getImages(int count) {
 
-        return remoteDataSource.get();
+        return remoteDataSource.get(count);
     }
 }

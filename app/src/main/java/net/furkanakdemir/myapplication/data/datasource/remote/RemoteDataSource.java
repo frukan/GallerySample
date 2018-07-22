@@ -31,7 +31,7 @@ public class RemoteDataSource implements DataSource<Gallery> {
     }
 
     @Override
-    public Observable<Gallery> get() {
+    public Observable<Gallery> get(int count) {
 
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -69,7 +69,7 @@ public class RemoteDataSource implements DataSource<Gallery> {
         builder.client(okHttpClient);
         Retrofit retrofit = builder.build();
 
-        return retrofit.create(GalleryService.class).getImages(COUNT).map(galleryMapper);
+        return retrofit.create(GalleryService.class).getImages(count).map(galleryMapper);
     }
 
     @Override

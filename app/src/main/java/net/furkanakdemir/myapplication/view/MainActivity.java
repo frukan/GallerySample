@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GalleryViewModel galleryViewModel;
     private AlertDialog      columnDialog;
+    private AlertDialog      sourceDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(Gallery gallery) {
                 Timber.d("[GALLERY] %s", gallery.toString());
 
+                gridView.removeAllViews();
+
                 gridView.setGallery(gallery);
             }
         });
@@ -56,6 +59,26 @@ public class MainActivity extends AppCompatActivity {
         galleryViewModel.refreshList();
 
         setupColumnDialog();
+        setupSourceDialog();
+    }
+
+    private void setupSourceDialog() {
+        NumberPicker picker = new NumberPicker(this);
+        picker.setMinValue(1);
+        picker.setMaxValue(30);
+
+        FrameLayout layout = new FrameLayout(this);
+        layout.addView(picker, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+
+        sourceDialog = new AlertDialog.Builder(this).setView(layout)
+            .setTitle(R.string.title_dialog_source)
+            .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                int sourceCount = picker.getValue();
+
+                galleryViewModel.refreshList(sourceCount);
+            })
+            .setNegativeButton(android.R.string.cancel, null)
+            .create();
     }
 
     private void setupColumnDialog() {
@@ -90,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.column:
                 columnDialog.show();
+
+                return true;
+
+            case R.id.source:
+                sourceDialog.show();
 
                 return true;
             default:

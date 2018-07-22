@@ -4,6 +4,13 @@
     <item
         android:id="@+id/column"
         android:icon="@drawable/ic_view_column_white_24dp"
-        android:title="Column"
+        android:title="Column Count"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/source"
+        android:icon="@drawable/ic_image_white_24dp"
+        android:title="Source Count"
+        app:showAsAction="always"/>
+
 </menu>

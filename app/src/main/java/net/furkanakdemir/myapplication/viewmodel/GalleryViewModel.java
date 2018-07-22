@@ -13,7 +13,8 @@ import timber.log.Timber;
 
 public class GalleryViewModel extends ViewModel {
 
-    private MutableLiveData<Gallery> galleryLiveData = new MutableLiveData<>();
+    private static final int                      DEFAULT_SOURCE_COUNT = 24;
+    private              MutableLiveData<Gallery> galleryLiveData      = new MutableLiveData<>();
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
@@ -28,9 +29,14 @@ public class GalleryViewModel extends ViewModel {
 
     public void refreshList() {
 
+        refreshList(DEFAULT_SOURCE_COUNT);
+    }
+
+    public void refreshList(int sourceCount) {
+
         disposable.clear();
 
-        repository.getImages()
+        repository.getImages(sourceCount)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<Gallery>() {

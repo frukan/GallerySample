@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 
 public interface DataSource<T> {
 
-    Observable<T> get();
+    Observable<T> get(int count);
 
     void set();
 }

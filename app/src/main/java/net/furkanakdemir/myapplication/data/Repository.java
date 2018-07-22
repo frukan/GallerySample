@@ -5,5 +5,5 @@ import net.furkanakdemir.myapplication.data.model.Gallery;
 
 public interface Repository {
 
-    Observable<Gallery> getImages();
+    Observable<Gallery> getImages(int count);
 }
