@@ -28,4 +28,8 @@ public class Gallery {
 
         return stringBuilder.toString();
     }
+
+    public int size() {
+        return images.size();
+    }
 }

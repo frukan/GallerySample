@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import net.furkanakdemir.myapplication.R;
 import net.furkanakdemir.myapplication.data.model.Gallery;
-import net.furkanakdemir.myapplication.data.model.Image;
 
 public class MyGridView extends LinearLayout {
 
+    private int COLUMN_COUNT = 6;
+
     private LinearLayout rootView;
+    private Gallery      gallery;
 
     public MyGridView(Context context) {
         super(context);
@@ -39,17 +41,33 @@ public class MyGridView extends LinearLayout {
         setOrientation(VERTICAL);
     }
 
+    public void setColumnCount(int count) {
+        if (count > 0) {
+            COLUMN_COUNT = count;
+        }
+
+        refreshGallery();
+    }
+
+    private void refreshGallery() {
+        if (gallery != null) {
+            rootView.removeAllViews();
+
+            setGallery(gallery);
+        }
+    }
+
     public void setGallery(@NonNull Gallery gallery) {
+        this.gallery = gallery;
 
         if (rootView != null) {
 
-            for (int x = 0; x < 10; x++) {
+            int gallerySize = gallery.size();
+            int rowSize = gallerySize / COLUMN_COUNT;
 
-                Image[] images = new Image[2];
-                images[0] = gallery.getImages().get(2 * x);
-                images[1] = gallery.getImages().get(2 * x + 1);
-
-                RowView rowView = new RowView(getContext(), images);
+            if (rowSize == 0) {
+                RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
+                    .subList(0, gallerySize));
 
                 LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
@@ -57,6 +75,32 @@ public class MyGridView extends LinearLayout {
 
                 rootView.addView(rowView);
             }
+
+            for (int x = 0; x < rowSize; x++) {
+
+                int startIndex = COLUMN_COUNT * x;
+                int endIndex = COLUMN_COUNT * x + COLUMN_COUNT;
+
+                RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
+                    .subList(startIndex, endIndex));
+
+                LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+                rowView.setLayoutParams(lpView);
+
+                rootView.addView(rowView);
+            }
+
+            int remainingRowCount = gallerySize % COLUMN_COUNT;
+
+            RowView rowView = new RowView(getContext(), COLUMN_COUNT, gallery.getImages()
+                .subList(gallery.size() - remainingRowCount, gallery.size()));
+
+            LayoutParams lpView = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+            rowView.setLayoutParams(lpView);
+
+            rootView.addView(rowView);
         }
     }
 }
