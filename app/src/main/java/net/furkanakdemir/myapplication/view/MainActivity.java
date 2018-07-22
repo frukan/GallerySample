@@ -3,14 +3,20 @@ package net.furkanakdemir.myapplication.view;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import net.furkanakdemir.myapplication.R;
@@ -24,7 +30,11 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.gridview_main) MyGridView gridView;
+    @BindView(R.id.gridview_main)            MyGridView  gridView;
+    @BindView(R.id.progressbar_main_loading) ProgressBar loadingProgressBar;
+    @BindView(R.id.textview_empty)           TextView    emptyTextView;
+    @BindView(R.id.scrollview_main_content)  ScrollView  contentScrollView;
+    @BindView(R.id.framelayout_root)         View        rootView;
 
     private GalleryViewModel galleryViewModel;
     private AlertDialog      columnDialog;
@@ -49,7 +59,27 @@ public class MainActivity extends AppCompatActivity {
 
                 gridView.removeAllViews();
 
-                gridView.setGallery(gallery);
+                if (gallery.size() == 0) {
+                    showEmptyList();
+                } else {
+                    gridView.setGallery(gallery);
+                    showContent();
+                }
+            }
+        });
+
+        galleryViewModel.getLoadingLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean isLoading) {
+                showLoading(isLoading);
+            }
+        });
+
+        galleryViewModel.getErrorLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean isError) {
+                hideEmptyList();
+                Snackbar.make(rootView, R.string.error, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -57,6 +87,29 @@ public class MainActivity extends AppCompatActivity {
 
         setupColumnDialog();
         setupSourceDialog();
+    }
+
+    private void showContent() {
+        contentScrollView.setVisibility(View.VISIBLE);
+        emptyTextView.setVisibility(View.GONE);
+    }
+
+    private void showEmptyList() {
+        contentScrollView.setVisibility(View.GONE);
+        emptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideEmptyList() {
+        emptyTextView.setVisibility(View.GONE);
+    }
+
+    private void showLoading(Boolean isLoading) {
+
+        if (isLoading) {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            loadingProgressBar.setVisibility(View.GONE);
+        }
     }
 
     private void setupSourceDialog() {

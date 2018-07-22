@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/framelayout_root"
     tools:context=".view.MainActivity"
     >
 
     <ScrollView
         android:layout_width="match_parent"
+        android:id="@+id/scrollview_main_content"
         android:layout_height="match_parent"
         >
         <net.furkanakdemir.myapplication.view.MyGridView
@@ -18,4 +20,25 @@
             />
 
     </ScrollView>
-</FrameLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressbar_main_loading"
+        android:layout_width="@dimen/size_progress_bar"
+        android:layout_height="@dimen/size_progress_bar"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/colorAccent"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        android:id="@+id/textview_empty"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

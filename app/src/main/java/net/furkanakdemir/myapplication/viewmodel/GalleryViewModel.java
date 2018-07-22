@@ -15,6 +15,8 @@ public class GalleryViewModel extends ViewModel {
 
     private static final int                      DEFAULT_SOURCE_COUNT = 24;
     private              MutableLiveData<Gallery> galleryLiveData      = new MutableLiveData<>();
+    private              MutableLiveData<Boolean> loadingLiveData      = new MutableLiveData<>();
+    private              MutableLiveData<Boolean> errorLiveData        = new MutableLiveData<>();
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
@@ -27,12 +29,22 @@ public class GalleryViewModel extends ViewModel {
         return galleryLiveData;
     }
 
+    public MutableLiveData<Boolean> getLoadingLiveData() {
+        return loadingLiveData;
+    }
+
+    public MutableLiveData<Boolean> getErrorLiveData() {
+        return errorLiveData;
+    }
+
     public void refreshList() {
 
         refreshList(DEFAULT_SOURCE_COUNT);
     }
 
     public void refreshList(int sourceCount) {
+
+        loadingLiveData.setValue(true);
 
         disposable.clear();
 
@@ -47,12 +59,14 @@ public class GalleryViewModel extends ViewModel {
 
                 @Override
                 public void onNext(Gallery gallery) {
+                    loadingLiveData.setValue(false);
                     galleryLiveData.setValue(gallery);
                 }
 
                 @Override
                 public void onError(Throwable e) {
                     Timber.e(e);
+                    errorLiveData.setValue(true);
                 }
 
                 @Override
