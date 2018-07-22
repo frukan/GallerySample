@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Timber.uprootAll();
-        Timber.plant(new Timber.DebugTree());
-
         ButterKnife.bind(this);
 
         // TODO Inject via Dagger
